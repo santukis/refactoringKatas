@@ -1,0 +1,5 @@
+Cherry tomatoes                     2.07
+  0.69 * 3
+3 for 2(Cherry tomatoes)           -0.69
+
+Total:                              1.38

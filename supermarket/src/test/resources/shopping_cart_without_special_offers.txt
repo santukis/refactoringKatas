@@ -1,0 +1,8 @@
+toothbrush                          0.99
+toothpaste                          1.79
+apples                              3.98
+  1.99 * 2.000
+rice                                2.49
+Cherry tomatoes                     0.69
+
+Total:                              9.94
