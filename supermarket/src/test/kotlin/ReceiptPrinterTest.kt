@@ -39,7 +39,7 @@ internal class ReceiptPrinterTest {
     }
 
     private fun checkPrintReceipt(shoppingCart: ShoppingCart, expectedReceiptFile: String) {
-        val receipt = teller.checksOutArticlesFrom(shoppingCart)
+        val receipt = teller.createReceiptFrom(shoppingCart)
         val expectedReceipt = loadExpectedReceipt(expectedReceiptFile)
         assertEquals(expectedReceipt, printer.printReceipt(receipt))
     }

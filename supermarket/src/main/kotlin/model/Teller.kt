@@ -7,19 +7,9 @@ class Teller(private val catalog: SupermarketCatalog) {
         this.offers[product] = Offer(offerType, product, argument)
     }
 
-    fun checksOutArticlesFrom(theCart: ShoppingCart): Receipt {
-        val receipt = Receipt()
-        val productQuantities = theCart.getItems()
-        for (pq in productQuantities) {
-            val p = pq.product
-            val quantity = pq.quantity
-            val unitPrice = this.catalog.getUnitPrice(p)
-            val price = quantity * unitPrice
-            receipt.addProduct(p, quantity, unitPrice, price)
+    fun createReceiptFrom(theCart: ShoppingCart): Receipt =
+        Receipt(catalog).apply {
+            addProducts(theCart)
+            handleOffers(theCart, offers)
         }
-        theCart.handleOffers(receipt, this.offers, this.catalog)
-
-        return receipt
-    }
-
 }
