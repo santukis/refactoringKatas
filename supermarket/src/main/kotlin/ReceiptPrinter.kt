@@ -7,7 +7,7 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
 
     fun printReceipt(receipt: Receipt): String {
         val result = StringBuilder()
-        for (item in receipt.getItems()) {
+        for (item in receipt.items) {
             val price = String.format(Locale.UK, "%.2f", item.totalPrice)
             val quantity = presentQuantity(item)
             val name = item.product.name
@@ -21,7 +21,7 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
             }
             result.append(line)
         }
-        for (discount in receipt.getDiscounts()) {
+        for (discount in receipt.discounts) {
             val productPresentation = discount.product.name
             val pricePresentation = String.format(Locale.UK, "%.2f", discount.discountAmount)
             val description = discount.description

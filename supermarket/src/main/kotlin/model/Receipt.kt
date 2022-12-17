@@ -4,22 +4,14 @@ import model.discount.*
 
 class Receipt(private val catalog: SupermarketCatalog) {
 
-    private val items = mutableListOf<ReceiptItem>()
-    private val discounts = mutableListOf<Discount>()
+    val items = mutableListOf<ReceiptItem>()
+    val discounts = mutableListOf<Discount>()
 
     fun getTotalPrice(): Double {
         var result = 0.0
         result += getTotalItemPrice()
         result -= getTotalDiscounts()
         return result
-    }
-
-    fun getItems(): List<ReceiptItem> {
-        return items.toList()
-    }
-
-    fun getDiscounts(): List<Discount> {
-        return discounts.toList()
     }
 
     fun addProducts(shoppingCart: ShoppingCart) {
@@ -34,25 +26,10 @@ class Receipt(private val catalog: SupermarketCatalog) {
     ) {
         shoppingCart.productWithQuantities().forEach { (product, quantity) ->
             offers[product]?.let { offer ->
-                val getDiscount: GetDiscount = GetDiscountFactory.create(catalog, offer, quantity)
+                val getDiscount: GetDiscount = GetDiscountFactory(catalog).create(offer, quantity.toInt())
                 discounts.add(getDiscount.get(quantity, product))
             }
         }
-    }
-
-    private fun createReceiptItem(
-        product: Product,
-        quantity: Double
-    ): ReceiptItem {
-        val price = catalog.getUnitPrice(product)
-        val totalPrice = quantity * price
-
-        return ReceiptItem(
-            product = product,
-            quantity = quantity,
-            price = price,
-            totalPrice = totalPrice
-        )
     }
 
     private fun getTotalItemPrice(): Double {
@@ -73,5 +50,20 @@ class Receipt(private val catalog: SupermarketCatalog) {
         }
 
         return result
+    }
+
+    private fun createReceiptItem(
+        product: Product,
+        quantity: Double
+    ): ReceiptItem {
+        val price = catalog.getUnitPrice(product)
+        val totalPrice = quantity * price
+
+        return ReceiptItem(
+            product = product,
+            quantity = quantity,
+            price = price,
+            totalPrice = totalPrice
+        )
     }
 }
