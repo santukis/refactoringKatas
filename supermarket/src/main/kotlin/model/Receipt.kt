@@ -47,14 +47,8 @@ class Receipt(private val catalog: SupermarketCatalog) {
 
                 } else if (offer.offerType === SpecialOfferType.TwoForAmount) {
                     requiredItemsForDiscount = 2
-                    if (quantityAsInt >= 2) {
-                        val total = offer.argument * (quantityAsInt / requiredItemsForDiscount) + quantityAsInt % 2 * unitPrice
-                        val discountN = unitPrice * quantity - total
-                        discount = Discount(product, "2 for " + offer.argument, discountN)
-                    }
 
-                }
-                if (offer.offerType === SpecialOfferType.FiveForAmount) {
+                } else if (offer.offerType === SpecialOfferType.FiveForAmount) {
                     requiredItemsForDiscount = 5
                 }
 
@@ -64,14 +58,17 @@ class Receipt(private val catalog: SupermarketCatalog) {
                     val discountAmount =
                         quantity * unitPrice - (itemsWithDiscount.toDouble() * 2.0 * unitPrice + quantityAsInt % 3 * unitPrice)
                     discount = Discount(product, "3 for 2", discountAmount)
-                }
 
-                if (offer.offerType === SpecialOfferType.TenPercentDiscount) {
+                } else if (offer.offerType === SpecialOfferType.TwoForAmount && quantityAsInt >= 2) {
+                    val total = offer.argument * (quantityAsInt / requiredItemsForDiscount) + quantityAsInt % 2 * unitPrice
+                    val discountN = unitPrice * quantity - total
+                    discount = Discount(product, "2 for " + offer.argument, discountN)
+
+                } else if (offer.offerType === SpecialOfferType.TenPercentDiscount) {
                     discount =
                         Discount(product, offer.argument.toString() + "% off", quantity * unitPrice * offer.argument / 100.0)
-                }
 
-                if (offer.offerType === SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
+                } else if (offer.offerType === SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
                     val discountTotal =
                         unitPrice * quantity - (offer.argument * itemsWithDiscount + quantityAsInt % 5 * unitPrice)
                     discount = Discount(product, requiredItemsForDiscount.toString() + " for " + offer.argument, discountTotal)
