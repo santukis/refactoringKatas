@@ -4,8 +4,8 @@ import model.discount.*
 
 class Receipt(private val catalog: SupermarketCatalog) {
 
-    val items = mutableListOf<ReceiptItem>()
-    val discounts = mutableListOf<Discount>()
+    private val items = mutableListOf<ReceiptItem>()
+    private val discounts = mutableListOf<Discount>()
 
     fun getTotalPrice(): Double {
         var result = 0.0
@@ -13,6 +13,10 @@ class Receipt(private val catalog: SupermarketCatalog) {
         result -= getTotalDiscounts()
         return result
     }
+
+    fun getItems(): List<ReceiptItem> = items.toList()
+
+    fun getDiscounts(): List<Discount> = discounts.toList()
 
     fun addProducts(shoppingCart: ShoppingCart) {
         shoppingCart.productWithQuantities().forEach { (product, quantity) ->
