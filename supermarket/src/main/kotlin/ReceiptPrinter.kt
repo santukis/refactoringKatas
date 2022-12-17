@@ -35,7 +35,7 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
             result.append("\n")
         }
         result.append("\n")
-        val pricePresentation = String.format(Locale.UK, "%.2f", receipt.totalPrice as Double)
+        val pricePresentation = String.format(Locale.UK, "%.2f", receipt.getTotalPrice())
         val total = "Total: "
         val whitespace = getWhitespace(this.columns - total.length - pricePresentation.length)
         result.append(total).append(whitespace).append(pricePresentation)

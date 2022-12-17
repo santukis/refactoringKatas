@@ -1,20 +1,16 @@
 package model
 
 class Receipt(private val catalog: SupermarketCatalog) {
+
     private val items = ArrayList<ReceiptItem>()
     private val discounts = ArrayList<Discount>()
 
-    val totalPrice: Double?
-        get() {
-            var total = 0.0
-            for (item in this.items) {
-                total += item.totalPrice
-            }
-            for (discount in this.discounts) {
-                total -= discount.discountAmount
-            }
-            return total
-        }
+    fun getTotalPrice(): Double {
+        var total = 0.0
+        total += getTotalItemPrice()
+        total -= getTotalDiscounts()
+        return total
+    }
 
     fun getItems(): List<ReceiptItem> {
         return ArrayList(this.items)
@@ -28,7 +24,7 @@ class Receipt(private val catalog: SupermarketCatalog) {
         val productQuantities = theCart.getItems()
 
         for (productQuantity in productQuantities) {
-            items.add(createReceiptItem(productQuantity, catalog))
+            items.add(createReceiptItem(productQuantity))
         }
     }
 
@@ -81,10 +77,7 @@ class Receipt(private val catalog: SupermarketCatalog) {
         }
     }
 
-    private fun createReceiptItem(
-        productQuantity: ProductQuantity,
-        catalog: SupermarketCatalog
-    ): ReceiptItem {
+    private fun createReceiptItem(productQuantity: ProductQuantity): ReceiptItem {
         val product = productQuantity.product
         val quantity = productQuantity.quantity
         val price = catalog.getUnitPrice(product)
@@ -98,4 +91,23 @@ class Receipt(private val catalog: SupermarketCatalog) {
         )
     }
 
+    private fun getTotalItemPrice(): Double {
+        var result = 0.0
+
+        items.forEach { item ->
+            result += item.totalPrice
+        }
+
+        return result
+    }
+
+    private fun getTotalDiscounts(): Double {
+        var result = 0.0
+
+        discounts.forEach { discount ->
+            result += discount.discountAmount
+        }
+
+        return result
+    }
 }
