@@ -1,5 +1,7 @@
 package model
 
+import model.discount.*
+
 class Receipt(private val catalog: SupermarketCatalog) {
 
     private val items = ArrayList<ReceiptItem>()
@@ -32,66 +34,12 @@ class Receipt(private val catalog: SupermarketCatalog) {
         shoppingCart: ShoppingCart,
         offers: Map<Product, Offer>
     ) {
-        shoppingCart.productQuantities().forEach { productQuantity ->
-            val product = productQuantity.key
-            val quantity = productQuantity.value
-
+        shoppingCart.productWithQuantities().forEach { (product, quantity) ->
             offers[product]?.let { offer ->
-                getDiscount(
-                    offer = offer,
-                    quantity = quantity,
-                    product = product
-                )?.let { discount -> discounts.add(discount) }
+                val getDiscount: GetDiscount = GetDiscountFactory.create(catalog, offer, quantity)
+                discounts.add(getDiscount.get(quantity, product))
             }
         }
-    }
-
-    private fun getDiscount(
-        offer: Offer,
-        quantity: Double,
-        product: Product
-    ): Discount? {
-        val unitPrice = catalog.getUnitPrice(product)
-        val quantityAsInt = quantity.toInt()
-        val requiredItemsForDiscount = getRequiredItemsForDiscount(offer)
-        val itemsWithDiscount = quantityAsInt / requiredItemsForDiscount
-
-        return if (offer.offerType === SpecialOfferType.ThreeForTwo && quantityAsInt > 2) {
-            val discountAmount =
-                quantity * unitPrice - (itemsWithDiscount.toDouble() * 2.0 * unitPrice + quantityAsInt % 3 * unitPrice)
-            Discount(product, "3 for 2", discountAmount)
-
-        } else if (offer.offerType === SpecialOfferType.TwoForAmount && quantityAsInt >= 2) {
-            val total = offer.argument * (quantityAsInt / requiredItemsForDiscount) + quantityAsInt % 2 * unitPrice
-            val discountN = unitPrice * quantity - total
-            Discount(product, "2 for " + offer.argument, discountN)
-
-        } else if (offer.offerType === SpecialOfferType.TenPercentDiscount) {
-            Discount(product, offer.argument.toString() + "% off", quantity * unitPrice * offer.argument / 100.0)
-
-        } else if (offer.offerType === SpecialOfferType.FiveForAmount && quantityAsInt >= 5) {
-            val discountTotal =
-                unitPrice * quantity - (offer.argument * itemsWithDiscount + quantityAsInt % 5 * unitPrice)
-            Discount(product, requiredItemsForDiscount.toString() + " for " + offer.argument, discountTotal)
-
-        } else {
-            null
-        }
-    }
-
-    private fun getRequiredItemsForDiscount(offer: Offer): Int {
-        var items = 1
-
-        if (offer.offerType === SpecialOfferType.ThreeForTwo) {
-            items = 3
-
-        } else if (offer.offerType === SpecialOfferType.TwoForAmount) {
-            items = 2
-
-        } else if (offer.offerType === SpecialOfferType.FiveForAmount) {
-            items = 5
-        }
-        return items
     }
 
     private fun createReceiptItem(productQuantity: ProductQuantity): ReceiptItem {
