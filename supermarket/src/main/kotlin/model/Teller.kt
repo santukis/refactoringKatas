@@ -7,9 +7,9 @@ class Teller(private val catalog: SupermarketCatalog) {
         this.offers[product] = Offer(offerType, product, argument)
     }
 
-    fun createReceiptFrom(theCart: ShoppingCart): Receipt =
+    fun createReceiptFrom(shoppingCart: ShoppingCart): Receipt =
         Receipt(catalog).apply {
-            addProducts(theCart)
-            handleOffers(theCart, offers)
+            addProducts(shoppingCart)
+            addDiscounts(shoppingCart, offers)
         }
 }

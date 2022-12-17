@@ -4,22 +4,22 @@ import model.discount.*
 
 class Receipt(private val catalog: SupermarketCatalog) {
 
-    private val items = ArrayList<ReceiptItem>()
-    private val discounts = ArrayList<Discount>()
+    private val items = mutableListOf<ReceiptItem>()
+    private val discounts = mutableListOf<Discount>()
 
     fun getTotalPrice(): Double {
-        var total = 0.0
-        total += getTotalItemPrice()
-        total -= getTotalDiscounts()
-        return total
+        var result = 0.0
+        result += getTotalItemPrice()
+        result -= getTotalDiscounts()
+        return result
     }
 
     fun getItems(): List<ReceiptItem> {
-        return ArrayList(this.items)
+        return items.toList()
     }
 
     fun getDiscounts(): List<Discount> {
-        return discounts
+        return discounts.toList()
     }
 
     fun addProducts(shoppingCart: ShoppingCart) {
@@ -28,7 +28,7 @@ class Receipt(private val catalog: SupermarketCatalog) {
         }
     }
 
-    fun handleOffers(
+    fun addDiscounts(
         shoppingCart: ShoppingCart,
         offers: Map<Product, Offer>
     ) {
