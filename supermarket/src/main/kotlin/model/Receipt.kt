@@ -37,7 +37,7 @@ class Receipt(private val catalog: SupermarketCatalog) {
         offers: Map<Product, Offer>
     ) {
         for (p in shoppingCart.productQuantities().keys) {
-            val quantity = shoppingCart.productQuantities[p]!!
+            val quantity = shoppingCart.productQuantities()[p]!!
             if (offers.containsKey(p)) {
                 val offer = offers[p]!!
                 val unitPrice = catalog.getUnitPrice(p)

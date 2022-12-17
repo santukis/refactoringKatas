@@ -2,12 +2,11 @@ package model
 
 class ShoppingCart {
 
-    private val items = ArrayList<ProductQuantity>()
-    internal var productQuantities: MutableMap<Product, Double> = HashMap()
-
+    private val items: MutableList<ProductQuantity> = mutableListOf()
+    private val productQuantities: MutableMap<Product, Double> = mutableMapOf()
 
     internal fun getItems(): List<ProductQuantity> {
-        return ArrayList(items)
+        return items.toList()
     }
 
     internal fun addItem(product: Product) {
@@ -15,16 +14,11 @@ class ShoppingCart {
     }
 
     internal fun productQuantities(): Map<Product, Double> {
-        return productQuantities
+        return productQuantities.toMap()
     }
-
 
     fun addItemQuantity(product: Product, quantity: Double) {
         items.add(ProductQuantity(product, quantity))
-        if (productQuantities.containsKey(product)) {
-            productQuantities[product] = productQuantities[product]!! + quantity
-        } else {
-            productQuantities[product] = quantity
-        }
+        productQuantities[product] = (productQuantities[product] ?: 0.0) + quantity
     }
 }
