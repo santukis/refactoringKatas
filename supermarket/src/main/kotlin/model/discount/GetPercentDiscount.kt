@@ -1,19 +1,18 @@
 package model.discount
 
-import model.Offer
 import model.Product
 import model.SupermarketCatalog
 
-class GetTenPercentDiscount(
+class GetPercentDiscount(
     catalog: SupermarketCatalog,
-    offer: Offer
-) : GetDiscount(catalog, offer) {
+    private val percentage: Double
+) : GetDiscount(catalog) {
 
-    override fun getDiscountDescription(): String = "${offer.argument}% off"
+    override fun getDiscountDescription(): String = "$percentage% off"
 
     override fun getDiscountAmount(quantity: Double, product: Product): Double {
         val unitPrice = catalog.getUnitPrice(product)
-        val tenPercentDiscount = offer.argument / 100.0
+        val tenPercentDiscount = percentage / 100.0
         return  (quantity * unitPrice) * tenPercentDiscount
     }
 }

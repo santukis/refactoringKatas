@@ -9,18 +9,26 @@ class GetDiscountFactory(private val catalog: SupermarketCatalog) {
     fun create(offer: Offer, quantity: Int): GetDiscount {
         return when {
             offer.offerType === SpecialOfferType.ThreeForTwo && quantity > 2 ->
-                GetThreeForTwoDiscount(catalog, offer)
+                GetThreeForTwoDiscount(catalog)
 
             offer.offerType === SpecialOfferType.TwoForAmount && quantity >= 2 ->
-                GetTwoForAmountDiscount(catalog, offer)
+                GetItemsForAmountDiscount(
+                    catalog = catalog,
+                    items = 2,
+                    amount = offer.argument
+                )
 
             offer.offerType === SpecialOfferType.TenPercentDiscount ->
-                GetTenPercentDiscount(catalog, offer)
+                GetPercentDiscount(catalog, offer.argument)
 
             offer.offerType === SpecialOfferType.FiveForAmount && quantity >= 5 ->
-                GetFiveForAmountDiscount(catalog, offer)
+                GetItemsForAmountDiscount(
+                    catalog = catalog,
+                    items = 5,
+                    amount = offer.argument
+                )
 
-            else -> NoDiscount(catalog, offer)
+            else -> NoDiscount(catalog)
         }
     }
 }

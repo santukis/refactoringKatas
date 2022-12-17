@@ -1,13 +1,11 @@
 package model.discount
 
-import model.Offer
 import model.Product
 import model.SupermarketCatalog
 
 class NoDiscount(
-    catalog: SupermarketCatalog,
-    offer: Offer
-) : GetDiscount(catalog, offer) {
+    catalog: SupermarketCatalog
+) : GetDiscount(catalog) {
 
     override fun getDiscountDescription(): String = ""
 
