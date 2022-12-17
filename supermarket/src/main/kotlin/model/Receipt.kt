@@ -22,11 +22,9 @@ class Receipt(private val catalog: SupermarketCatalog) {
         return discounts
     }
 
-    fun addProducts(theCart: ShoppingCart) {
-        val productQuantities = theCart.getItems()
-
-        for (productQuantity in productQuantities) {
-            items.add(createReceiptItem(productQuantity))
+    fun addProducts(shoppingCart: ShoppingCart) {
+        shoppingCart.productWithQuantities().forEach { (product, quantity) ->
+            items.add(createReceiptItem(product, quantity))
         }
     }
 
@@ -42,9 +40,10 @@ class Receipt(private val catalog: SupermarketCatalog) {
         }
     }
 
-    private fun createReceiptItem(productQuantity: ProductQuantity): ReceiptItem {
-        val product = productQuantity.product
-        val quantity = productQuantity.quantity
+    private fun createReceiptItem(
+        product: Product,
+        quantity: Double
+    ): ReceiptItem {
         val price = catalog.getUnitPrice(product)
         val totalPrice = quantity * price
 
