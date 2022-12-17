@@ -13,7 +13,7 @@ class GetItemsForAmountDiscount(
     override fun getDiscountAmount(quantity: Double, product: Product): Double {
         val unitPrice = catalog.getUnitPrice(product)
         val itemsWithDiscount = quantity.toInt() / items
-        val fiveForAmountDiscount =  amount * itemsWithDiscount + (quantity.toInt() % items * unitPrice)
-        return (quantity * unitPrice) - fiveForAmountDiscount
+        val itemsForAmountDiscount =  amount * itemsWithDiscount + (quantity.toInt() % items * unitPrice)
+        return (quantity * unitPrice) - itemsForAmountDiscount
     }
 }
