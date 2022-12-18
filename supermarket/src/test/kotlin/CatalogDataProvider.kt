@@ -1,12 +1,14 @@
 import model.*
-import model.offer.SpecialOfferType
+import model.catalog.DefaultCatalog
+import model.catalog.SupermarketCatalog
+import model.offer.*
 import org.junit.jupiter.params.provider.Arguments
 import java.util.stream.Stream
 
 object CatalogDataProvider {
 
     fun createCatalog(): SupermarketCatalog =
-        FakeCatalog().apply {
+        DefaultCatalog().apply {
             addProduct(product = getToothBrush(), price = 0.99)
             addProduct(product = getToothPaste(), price = 1.79)
             addProduct(product = getApples(), price = 1.99)
@@ -14,12 +16,12 @@ object CatalogDataProvider {
             addProduct(product = getCherries(), price = 0.69)
         }
 
-    fun Teller.addSpecialOffers() {
-        addSpecialOffer(offerType = SpecialOfferType.TwoForAmount, product = getToothBrush(), argument = 0.99)
-        addSpecialOffer(offerType = SpecialOfferType.TenPercentDiscount, product = getApples(), argument = 20.0)
-        addSpecialOffer(offerType = SpecialOfferType.TenPercentDiscount, product = getRice(), argument = 10.0)
-        addSpecialOffer(offerType = SpecialOfferType.FiveForAmount, product = getToothPaste(), argument = 7.49)
-        addSpecialOffer(offerType = SpecialOfferType.ThreeForTwo, product = getCherries(), argument = 0.0)
+    fun SupermarketCatalog.addSpecialOffers() {
+        addOffer(TwoForAmountOffer(product = getToothBrush(), argument = 0.99))
+        addOffer(PercentDiscountOffer(product = getApples(), argument = 20.0))
+        addOffer(PercentDiscountOffer(product = getRice(), argument = 10.0))
+        addOffer(FiveForAmountOffer(product = getToothPaste(), argument = 7.49))
+        addOffer(ThreeForTwoOffer(product = getCherries()))
     }
 
     @JvmStatic
@@ -45,8 +47,7 @@ object CatalogDataProvider {
         Arguments.of(
             ShoppingCart()
                 .addItem(getToothBrush(), quantity = 4.0)
-                .addItem(getToothBrush(), quantity = 1.0)
-            ,
+                .addItem(getToothBrush(), quantity = 1.0),
             "/shopping_cart_with_special_offer_TwoForAmountMultipleItems.txt"
         ),
         Arguments.of(

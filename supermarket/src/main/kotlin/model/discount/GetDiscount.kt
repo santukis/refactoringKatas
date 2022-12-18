@@ -1,11 +1,8 @@
 package model.discount
 
 import model.Product
-import model.SupermarketCatalog
 
-abstract class GetDiscount(
-    protected val catalog: SupermarketCatalog
-) {
+abstract class GetDiscount(protected val unitPrice: Double) {
 
     fun get(quantity: Double, product: Product): Discount =
         Discount(

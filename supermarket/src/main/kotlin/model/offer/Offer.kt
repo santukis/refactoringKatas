@@ -1,12 +1,8 @@
 package model.offer
 
 import model.Product
-import model.SupermarketCatalog
-import model.discount.*
+import model.discount.Discount
 
-abstract class Offer(
-    protected val catalog: SupermarketCatalog,
-    protected val product: Product
-) {
-    abstract fun getDiscount(quantity: Double): Discount?
+abstract class Offer(val product: Product) {
+    abstract fun getDiscount(quantity: Double, unitPrice: Double): Discount?
 }

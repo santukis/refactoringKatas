@@ -1,6 +1,7 @@
 import CatalogDataProvider.addSpecialOffers
 import CatalogDataProvider.createCatalog
 import model.*
+import model.catalog.SupermarketCatalog
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
@@ -34,7 +35,7 @@ internal class ReceiptPrinterTest {
         shoppingCart: ShoppingCart,
         expectedReceiptFile: String
     ) {
-        teller.addSpecialOffers()
+        fakeCatalog.addSpecialOffers()
         checkPrintReceipt(shoppingCart, expectedReceiptFile)
     }
 

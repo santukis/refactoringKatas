@@ -1,20 +1,18 @@
 package model.offer
 
 import model.Product
-import model.SupermarketCatalog
 import model.discount.Discount
 import model.discount.GetItemsForAmountDiscount
 
 class TwoForAmountOffer(
-    catalog: SupermarketCatalog,
     product: Product,
     private val argument: Double
-): Offer(catalog, product) {
+): Offer(product) {
 
-    override fun getDiscount(quantity: Double): Discount? =
+    override fun getDiscount(quantity: Double, unitPrice: Double): Discount? =
         if (quantity.toInt() >= 2) {
             GetItemsForAmountDiscount(
-                catalog = catalog,
+                unitPrice = unitPrice,
                 items = 2,
                 amount = argument
             ).get(quantity, product)

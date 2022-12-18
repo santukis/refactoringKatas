@@ -1,7 +1,7 @@
 package model
 
+import model.catalog.SupermarketCatalog
 import model.discount.Discount
-import model.offer.Offer
 
 class Receipt(private val catalog: SupermarketCatalog) {
 
@@ -25,12 +25,9 @@ class Receipt(private val catalog: SupermarketCatalog) {
         }
     }
 
-    fun addDiscounts(
-        shoppingCart: ShoppingCart,
-        offers: Map<Product, Offer>
-    ) {
+    fun addDiscounts(shoppingCart: ShoppingCart) {
         shoppingCart.productWithQuantities().forEach { (product, quantity) ->
-            offers[product]?.getDiscount(quantity)?.let { discount ->
+            catalog.getOfferFor(product)?.getDiscount(quantity, catalog.getUnitPrice(product))?.let { discount ->
                 discounts.add(discount)
             }
         }

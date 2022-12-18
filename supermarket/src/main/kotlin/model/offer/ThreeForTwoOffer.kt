@@ -1,18 +1,16 @@
 package model.offer
 
 import model.Product
-import model.SupermarketCatalog
 import model.discount.Discount
 import model.discount.GetThreeForTwoDiscount
 
 class ThreeForTwoOffer(
-    catalog: SupermarketCatalog,
     product: Product,
-): Offer(catalog, product) {
+): Offer(product) {
 
-    override fun getDiscount(quantity: Double): Discount? =
+    override fun getDiscount(quantity: Double, unitPrice: Double): Discount? =
         if (quantity.toInt() > 2) {
-            GetThreeForTwoDiscount(catalog).get(quantity, product)
+            GetThreeForTwoDiscount(unitPrice).get(quantity, product)
 
         } else null
 }

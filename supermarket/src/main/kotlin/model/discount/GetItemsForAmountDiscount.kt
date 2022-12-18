@@ -1,17 +1,15 @@
 package model.discount
 
 import model.Product
-import model.SupermarketCatalog
 
 class GetItemsForAmountDiscount(
-    catalog: SupermarketCatalog,
+    unitPrice: Double,
     private val items: Int,
-    private val amount: Double) : GetDiscount(catalog) {
+    private val amount: Double) : GetDiscount(unitPrice) {
 
     override fun getDiscountDescription(): String = "$items for $amount"
 
     override fun getDiscountAmount(quantity: Double, product: Product): Double {
-        val unitPrice = catalog.getUnitPrice(product)
         val itemsWithDiscount = quantity.toInt() / items
         val itemsForAmountDiscount =  amount * itemsWithDiscount + (quantity.toInt() % items * unitPrice)
         return (quantity * unitPrice) - itemsForAmountDiscount
