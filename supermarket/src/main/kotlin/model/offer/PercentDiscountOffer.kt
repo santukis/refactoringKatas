@@ -8,8 +8,8 @@ import model.discount.GetPercentDiscount
 class PercentDiscountOffer(
     catalog: SupermarketCatalog,
     product: Product,
-    argument: Double
-): Offer(catalog, product, argument) {
+    private val argument: Double
+): Offer(catalog, product) {
 
     override fun getDiscount(quantity: Double): Discount =
         GetPercentDiscount(catalog, argument).get(quantity, product)

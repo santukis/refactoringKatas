@@ -6,8 +6,7 @@ import model.discount.*
 
 abstract class Offer(
     protected val catalog: SupermarketCatalog,
-    protected val product: Product,
-    protected val argument: Double
+    protected val product: Product
 ) {
     abstract fun getDiscount(quantity: Double): Discount?
 }

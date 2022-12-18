@@ -8,8 +8,8 @@ import model.discount.GetItemsForAmountDiscount
 class FiveForAmountOffer(
     catalog: SupermarketCatalog,
     product: Product,
-    argument: Double
-): Offer(catalog, product, argument) {
+    private val argument: Double
+): Offer(catalog, product) {
 
     override fun getDiscount(quantity: Double): Discount? =
         if (quantity.toInt() >= 5) {

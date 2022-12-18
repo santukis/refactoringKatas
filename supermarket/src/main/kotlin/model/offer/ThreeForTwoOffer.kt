@@ -8,7 +8,7 @@ import model.discount.GetThreeForTwoDiscount
 class ThreeForTwoOffer(
     catalog: SupermarketCatalog,
     product: Product,
-): Offer(catalog, product, 0.0) {
+): Offer(catalog, product) {
 
     override fun getDiscount(quantity: Double): Discount? =
         if (quantity.toInt() > 2) {
