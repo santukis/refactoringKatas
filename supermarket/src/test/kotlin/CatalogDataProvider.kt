@@ -1,4 +1,5 @@
 import model.*
+import model.offer.SpecialOfferType
 import org.junit.jupiter.params.provider.Arguments
 import java.util.stream.Stream
 

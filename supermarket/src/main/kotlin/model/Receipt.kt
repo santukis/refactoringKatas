@@ -1,6 +1,7 @@
 package model
 
-import model.discount.*
+import model.discount.Discount
+import model.offer.Offer
 
 class Receipt(private val catalog: SupermarketCatalog) {
 
@@ -29,9 +30,8 @@ class Receipt(private val catalog: SupermarketCatalog) {
         offers: Map<Product, Offer>
     ) {
         shoppingCart.productWithQuantities().forEach { (product, quantity) ->
-            offers[product]?.let { offer ->
-                val getDiscount: GetDiscount = GetDiscountFactory(catalog).create(offer, quantity.toInt())
-                discounts.add(getDiscount.get(quantity, product))
+            offers[product]?.getDiscount(quantity)?.let { discount ->
+                discounts.add(discount)
             }
         }
     }
