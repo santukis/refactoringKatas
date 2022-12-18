@@ -6,9 +6,9 @@ import model.discount.GetPercentDiscount
 
 class PercentDiscountOffer(
     product: Product,
-    private val argument: Double
+    private val percentage: Double
 ): Offer(product) {
 
     override fun getDiscount(quantity: Double, unitPrice: Double): Discount =
-        GetPercentDiscount(unitPrice, argument).get(quantity, product)
+        GetPercentDiscount(unitPrice, percentage).get(quantity, product)
 }

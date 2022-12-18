@@ -17,10 +17,10 @@ object CatalogDataProvider {
         }
 
     fun SupermarketCatalog.addSpecialOffers() {
-        addOffer(TwoForAmountOffer(product = getToothBrush(), argument = 0.99))
-        addOffer(PercentDiscountOffer(product = getApples(), argument = 20.0))
-        addOffer(PercentDiscountOffer(product = getRice(), argument = 10.0))
-        addOffer(FiveForAmountOffer(product = getToothPaste(), argument = 7.49))
+        addOffer(TwoForAmountOffer(product = getToothBrush(), price = 0.99))
+        addOffer(PercentDiscountOffer(product = getApples(), percentage = 20.0))
+        addOffer(PercentDiscountOffer(product = getRice(), percentage = 10.0))
+        addOffer(FiveForAmountOffer(product = getToothPaste(), price = 7.49))
         addOffer(ThreeForTwoOffer(product = getCherries()))
     }
 

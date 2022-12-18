@@ -6,7 +6,7 @@ import model.discount.GetItemsForAmountDiscount
 
 class FiveForAmountOffer(
     product: Product,
-    private val argument: Double
+    private val price: Double
 ): Offer(product) {
 
     override fun getDiscount(quantity: Double, unitPrice: Double): Discount? =
@@ -14,7 +14,7 @@ class FiveForAmountOffer(
             GetItemsForAmountDiscount(
                 unitPrice = unitPrice,
                 items = 5,
-                amount = argument
+                amount = price
             ).get(quantity, product)
 
         } else null
