@@ -9,7 +9,7 @@ class GetItemsForAmountDiscount(
 
     override fun getDiscountDescription(): String = "$items for $amount"
 
-    override fun getDiscountAmount(quantity: Double, product: Product): Double {
+    override fun getDiscountAmount(quantity: Double): Double {
         val itemsWithDiscount = quantity.toInt() / items
         val itemsForAmountDiscount =  amount * itemsWithDiscount + (quantity.toInt() % items * unitPrice)
         return (quantity * unitPrice) - itemsForAmountDiscount

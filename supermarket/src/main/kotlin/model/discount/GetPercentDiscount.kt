@@ -9,7 +9,7 @@ class GetPercentDiscount(
 
     override fun getDiscountDescription(): String = "$percentage% off"
 
-    override fun getDiscountAmount(quantity: Double, product: Product): Double {
+    override fun getDiscountAmount(quantity: Double): Double {
         val tenPercentDiscount = percentage / 100.0
         return  (quantity * unitPrice) * tenPercentDiscount
     }

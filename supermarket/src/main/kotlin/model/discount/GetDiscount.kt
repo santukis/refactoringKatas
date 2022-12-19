@@ -8,10 +8,10 @@ abstract class GetDiscount(protected val unitPrice: Double) {
         Discount(
             product = product,
             description = getDiscountDescription(),
-            discountAmount = getDiscountAmount(quantity, product)
+            discountAmount = getDiscountAmount(quantity)
         )
 
     abstract fun getDiscountDescription(): String
 
-    abstract fun getDiscountAmount(quantity: Double, product: Product): Double
+    abstract fun getDiscountAmount(quantity: Double): Double
 }
