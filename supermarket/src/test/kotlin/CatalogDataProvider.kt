@@ -1,20 +1,13 @@
 import model.*
-import model.catalog.DefaultCatalog
 import model.catalog.SupermarketCatalog
 import model.offer.*
+import model.product.BundleProduct
+import model.product.ProductUnit
+import model.product.SingleProduct
 import org.junit.jupiter.params.provider.Arguments
 import java.util.stream.Stream
 
 object CatalogDataProvider {
-
-    fun createCatalog(): SupermarketCatalog =
-        DefaultCatalog().apply {
-            addProduct(product = getToothBrush(), price = 0.99)
-            addProduct(product = getToothPaste(), price = 1.79)
-            addProduct(product = getApples(), price = 1.99)
-            addProduct(product = getRice(), price = 2.49)
-            addProduct(product = getCherries(), price = 0.69)
-        }
 
     fun SupermarketCatalog.addSpecialOffers() {
         addOffer(TwoForAmountOffer(product = getToothBrush(), price = 0.99))
@@ -22,6 +15,8 @@ object CatalogDataProvider {
         addOffer(PercentDiscountOffer(product = getRice(), percentage = 10.0))
         addOffer(FiveForAmountOffer(product = getToothPaste(), price = 7.49))
         addOffer(ThreeForTwoOffer(product = getCherries()))
+        addOffer(PercentDiscountBundleOffer(product = BundleProduct(listOf(getToothBrush(), getToothPaste())), percentage = 10.0))
+        addOffer(PercentDiscountBundleOffer(product = BundleProduct(listOf(getOranges(), getLemons())), percentage = 15.0))
     }
 
     @JvmStatic
@@ -66,19 +61,36 @@ object CatalogDataProvider {
             ShoppingCart().addItem(getCherries(), quantity = 3.0),
             "/shopping_cart_with_special_offer_ThreeForAmount.txt"
         ),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getToothBrush(), quantity = 1.0)
+                .addItem(getToothPaste(), quantity = 1.0)
+                .addItem(getLemons(), quantity = 1.0),
+            "/shopping_cart_with_special_offer_PercentDiscountBundle.txt"
+        ),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getOranges(), quantity = 1.0)
+                .addItem(getLemons(), quantity = 3.0),
+            "/shopping_cart_with_special_offer_PercentDiscountBundle_MultipleItems.txt"
+        ),
     )
 
-    private fun getToothBrush(): Product = Product(name = "toothbrush", unit = ProductUnit.Each)
+    private fun getToothBrush() = SingleProduct(name = "toothbrush", unit = ProductUnit.Each, unitPrice = 0.99)
 
-    private fun getToothPaste(): Product = Product(name = "toothpaste", unit = ProductUnit.Each)
+    private fun getToothPaste() = SingleProduct(name = "toothpaste", unit = ProductUnit.Each, unitPrice = 1.79)
 
-    private fun getApples(): Product = Product(name = "apples", unit = ProductUnit.Kilo)
+    private fun getApples() = SingleProduct(name = "apples", unit = ProductUnit.Kilo, unitPrice = 1.99)
 
-    private fun getRice(): Product = Product(name = "rice", unit = ProductUnit.Each)
+    private fun getRice() = SingleProduct(name = "rice", unit = ProductUnit.Each, unitPrice = 2.49)
 
-    private fun getCherries(): Product = Product(name = "Cherry tomatoes", unit = ProductUnit.Each)
+    private fun getCherries() = SingleProduct(name = "Cherry tomatoes", unit = ProductUnit.Each, unitPrice = 0.69)
 
-    private fun ShoppingCart.addItem(item: Product, quantity: Double): ShoppingCart =
+    private fun getOranges() = SingleProduct(name = "Oranges", unit = ProductUnit.Kilo, unitPrice = 0.79)
+
+    private fun getLemons() = SingleProduct(name = "Lemons", unit = ProductUnit.Kilo, unitPrice = 1.29)
+
+    private fun ShoppingCart.addItem(item: SingleProduct, quantity: Double): ShoppingCart =
         this.apply {
             addItemQuantity(item, quantity)
         }

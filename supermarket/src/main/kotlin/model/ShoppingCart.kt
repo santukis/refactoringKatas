@@ -1,14 +1,19 @@
 package model
 
+import model.product.Product
+import model.product.ProductQuantity
+import model.product.SingleProduct
+
 class ShoppingCart {
 
-    private val productWithQuantities: MutableMap<Product, Double> = mutableMapOf()
+    private val productQuantities: MutableMap<Product, ProductQuantity> = mutableMapOf()
 
-    internal fun productWithQuantities(): Map<Product, Double> {
-        return productWithQuantities.toMap()
+    internal fun productQuantities(): List<ProductQuantity> = productQuantities.values.toList()
+
+    fun addItemQuantity(product: SingleProduct, quantity: Double) {
+        productQuantities[product] = updateItemQuantity(product, quantity)
     }
 
-    fun addItemQuantity(product: Product, quantity: Double) {
-        productWithQuantities[product] = (productWithQuantities[product] ?: 0.0) + quantity
-    }
+    private fun updateItemQuantity(product: SingleProduct, quantity: Double): ProductQuantity =
+        productQuantities[product]?.updateQuantity(quantity) ?: ProductQuantity(product, quantity)
 }

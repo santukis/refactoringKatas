@@ -1,16 +1,14 @@
 package model.offer
 
-import model.Product
-import model.discount.Discount
-import model.discount.GetThreeForTwoDiscount
+import model.product.ProductQuantity
+import model.product.SingleProduct
 
 class ThreeForTwoOffer(
-    product: Product,
-): Offer(product) {
+    product: SingleProduct,
+): ItemsForAmountOffer(product, 3, product.unitPrice * 2) {
 
-    override fun getDiscount(quantity: Double, unitPrice: Double): Discount? =
-        if (quantity.toInt() > 2) {
-            GetThreeForTwoDiscount(unitPrice).get(quantity, product)
+    override fun shouldDiscountBeApplied(productQuantities: List<ProductQuantity>): Boolean =
+        (findProductQuantity(productQuantities)?.quantity?.toInt() ?: 0) > 2
 
-        } else null
+    override fun getDiscountDescription(): String = "3 for 2"
 }

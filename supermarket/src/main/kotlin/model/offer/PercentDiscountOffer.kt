@@ -1,14 +1,21 @@
 package model.offer
 
-import model.Product
-import model.discount.Discount
-import model.discount.GetPercentDiscount
+import model.product.ProductQuantity
+import model.product.SingleProduct
+import java.lang.Exception
 
 class PercentDiscountOffer(
-    product: Product,
+    product: SingleProduct,
     private val percentage: Double
-): Offer(product) {
+): Offer<SingleProduct>(product) {
 
-    override fun getDiscount(quantity: Double, unitPrice: Double): Discount =
-        GetPercentDiscount(unitPrice, percentage).get(quantity, product)
+    override fun shouldDiscountBeApplied(productQuantities: List<ProductQuantity>): Boolean =
+        findProductQuantity(productQuantities) != null
+
+    override fun getDiscountDescription(): String = "$percentage% off"
+
+    override fun getDiscountAmount(productQuantities: List<ProductQuantity>): Double {
+        val productQuantity = findProductQuantity(productQuantities) ?: throw Exception()
+        return productQuantity.getTotalPrice() * (percentage / 100.0)
+    }
 }

@@ -1,6 +1,6 @@
 import CatalogDataProvider.addSpecialOffers
-import CatalogDataProvider.createCatalog
 import model.*
+import model.catalog.DefaultCatalog
 import model.catalog.SupermarketCatalog
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -16,7 +16,7 @@ internal class ReceiptPrinterTest {
     @BeforeEach
     fun setup() {
         printer = ReceiptPrinter()
-        fakeCatalog = createCatalog()
+        fakeCatalog = DefaultCatalog()
         teller = Teller(catalog = fakeCatalog)
     }
 
