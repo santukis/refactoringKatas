@@ -1,17 +1,17 @@
-import model.ProductUnit
+import model.product.ProductUnit
 import model.Receipt
-import model.ReceiptItem
+import model.product.ProductQuantity
 import java.util.*
 
 class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
 
     fun printReceipt(receipt: Receipt): String {
         val result = StringBuilder()
-        for (item in receipt.getItems()) {
-            val price = String.format(Locale.UK, "%.2f", item.totalPrice)
+        for (item in receipt.getRecipeItems()) {
+            val price = String.format(Locale.UK, "%.2f", item.getTotalPrice())
             val quantity = presentQuantity(item)
             val name = item.product.name
-            val unitPrice = String.format(Locale.UK, "%.2f", item.price)
+            val unitPrice = String.format(Locale.UK, "%.2f", item.product.unitPrice)
 
             val whitespaceSize = this.columns - name.length - price.length
             var line = name + getWhitespace(whitespaceSize) + price + "\n"
@@ -42,8 +42,8 @@ class ReceiptPrinter @JvmOverloads constructor(private val columns: Int = 40) {
         return result.toString()
     }
 
-    private fun presentQuantity(item: ReceiptItem): String {
-        return if (ProductUnit.Each.equals(item.product.unit))
+    private fun presentQuantity(item: ProductQuantity): String {
+        return if (ProductUnit.Each == item.product.unit)
             String.format("%x", item.quantity.toInt())
         else
             String.format(Locale.UK, "%.3f", item.quantity)

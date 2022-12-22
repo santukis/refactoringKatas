@@ -1,0 +1,6 @@
+toothbrush                          0.99
+toothpaste                          1.79
+Lemons                              1.29
+10.0% off(toothbrush, toothpaste)  -0.28
+
+Total:                              3.79

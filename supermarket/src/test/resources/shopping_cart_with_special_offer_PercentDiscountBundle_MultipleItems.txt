@@ -1,0 +1,6 @@
+Oranges                             0.79
+Lemons                              3.87
+  1.29 * 3.000
+15.0% off(Oranges, Lemons)         -0.31
+
+Total:                              4.35
