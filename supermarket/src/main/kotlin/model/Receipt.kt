@@ -21,9 +21,7 @@ class Receipt(private val catalog: SupermarketCatalog) {
     fun getDiscounts(): List<Discount> = discounts.toList()
 
     fun addProducts(shoppingCart: ShoppingCart) {
-        shoppingCart.productQuantities().forEach { productQuantity ->
-            productQuantities.add(productQuantity)
-        }
+        productQuantities.addAll(shoppingCart.productQuantities())
     }
 
     fun addDiscounts(shoppingCart: ShoppingCart) {

@@ -5,4 +5,8 @@ import model.product.SingleProduct
 class TwoForAmountOffer(
     product: SingleProduct,
     price: Double
-): ItemsForAmountOffer(product, 2, price)
+): ItemsForAmountOffer(
+    product = product,
+    items = 2,
+    amount = price
+)

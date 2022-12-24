@@ -5,7 +5,7 @@ class BundleProduct(
 ): Product {
 
     override val name: String
-        get() = bundle.joinToString() { it.name }
+        get() = bundle.joinToString { it.name }
 
     override val unit: ProductUnit
         get() = ProductUnit.Bundle
