@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Receipt</title>
+    <head>
+    <body>
+        <p>toothbrush                          1.98</p>
+            <p>0.99 * 2</p>
+        <p>2 for 0.99(toothbrush)             -0.99</p>
+        <p>Total:                              0.99</p>
+    </body>
+</html>

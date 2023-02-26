@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Receipt</title>
+    <head>
+    <body>
+        <p>rice                                4.98</p>
+            <p>2.49 * 2</p>
+        <p>10.0% off(rice)                    -0.50</p>
+        <p>Total:                              4.48</p>
+    </body>
+</html>

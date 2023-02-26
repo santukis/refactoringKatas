@@ -1,6 +1,7 @@
 package model
 
 import model.catalog.SupermarketCatalog
+import model.receipt.Receipt
 
 class Teller(private val catalog: SupermarketCatalog) {
 

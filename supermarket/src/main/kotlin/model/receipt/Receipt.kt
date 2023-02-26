@@ -1,5 +1,6 @@
-package model
+package model.receipt
 
+import model.ShoppingCart
 import model.catalog.SupermarketCatalog
 import model.discount.Discount
 import model.product.ProductQuantity
@@ -16,9 +17,10 @@ class Receipt(private val catalog: SupermarketCatalog) {
         return result
     }
 
-    fun getRecipeItems(): List<ProductQuantity> = productQuantities.toList()
-
-    fun getDiscounts(): List<Discount> = discounts.toList()
+    fun getReceiptItem(): ReceiptItem = ReceiptItem(
+        products = productQuantities,
+        discounts = discounts
+    )
 
     fun addProducts(shoppingCart: ShoppingCart) {
         productQuantities.addAll(shoppingCart.productQuantities())

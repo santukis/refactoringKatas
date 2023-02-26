@@ -1,45 +1,16 @@
-import CatalogDataProvider.addSpecialOffers
-import model.*
-import model.catalog.DefaultCatalog
+import model.ShoppingCart
+import model.Teller
 import model.catalog.SupermarketCatalog
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.MethodSource
+import model.printer.ReceiptPrinter
+import org.junit.jupiter.api.Assertions.assertEquals
 
-internal class ReceiptPrinterTest {
+internal open class ReceiptPrinterTest {
 
-    private lateinit var printer: ReceiptPrinter
-    private lateinit var fakeCatalog: SupermarketCatalog
-    private lateinit var teller: Teller
+    protected lateinit var printer: ReceiptPrinter
+    protected lateinit var fakeCatalog: SupermarketCatalog
+    protected lateinit var teller: Teller
 
-    @BeforeEach
-    fun setup() {
-        printer = ReceiptPrinter()
-        fakeCatalog = DefaultCatalog()
-        teller = Teller(catalog = fakeCatalog)
-    }
-
-    @ParameterizedTest
-    @MethodSource("CatalogDataProvider#getShoppingCartWithoutSpecialOffers")
-    fun printReceiptWithoutSpecialOffers(
-        shoppingCart: ShoppingCart,
-        expectedReceiptFile: String
-    ) {
-        checkPrintReceipt(shoppingCart, expectedReceiptFile)
-    }
-
-    @ParameterizedTest
-    @MethodSource("CatalogDataProvider#getShoppingCartWithSpecialOffers")
-    fun printReceiptWithSpecialOffers(
-        shoppingCart: ShoppingCart,
-        expectedReceiptFile: String
-    ) {
-        fakeCatalog.addSpecialOffers()
-        checkPrintReceipt(shoppingCart, expectedReceiptFile)
-    }
-
-    private fun checkPrintReceipt(shoppingCart: ShoppingCart, expectedReceiptFile: String) {
+    protected fun checkPrintReceipt(shoppingCart: ShoppingCart, expectedReceiptFile: String) {
         val receipt = teller.createReceiptFrom(shoppingCart)
         val expectedReceipt = loadExpectedReceipt(expectedReceiptFile)
         assertEquals(expectedReceipt, printer.printReceipt(receipt))

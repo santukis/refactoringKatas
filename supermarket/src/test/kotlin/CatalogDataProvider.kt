@@ -20,7 +20,7 @@ object CatalogDataProvider {
     }
 
     @JvmStatic
-    fun getShoppingCartWithoutSpecialOffers(): Stream<Arguments> = Stream.of(
+    fun getShoppingCartWithoutSpecialOffersOnPlainText(): Stream<Arguments> = Stream.of(
         Arguments.of(ShoppingCart(), "/shopping_cart_empty.txt"),
         Arguments.of(
             ShoppingCart()
@@ -34,7 +34,21 @@ object CatalogDataProvider {
     )
 
     @JvmStatic
-    fun getShoppingCartWithSpecialOffers(): Stream<Arguments> = Stream.of(
+    fun getShoppingCartWithoutSpecialOffersOnHtml(): Stream<Arguments> = Stream.of(
+        Arguments.of(ShoppingCart(), "/html_shopping_cart_empty.txt"),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getToothBrush(), quantity = 1.0)
+                .addItem(getToothPaste(), quantity = 1.0)
+                .addItem(getApples(), quantity = 2.0)
+                .addItem(getRice(), quantity = 1.0)
+                .addItem(getCherries(), quantity = 1.0),
+            "/html_shopping_cart_without_special_offers.txt"
+        ),
+    )
+
+    @JvmStatic
+    fun getShoppingCartWithSpecialOffersOnPlainText(): Stream<Arguments> = Stream.of(
         Arguments.of(
             ShoppingCart().addItem(getToothBrush(), quantity = 2.0),
             "/shopping_cart_with_special_offer_TwoForAmount.txt"
@@ -73,6 +87,49 @@ object CatalogDataProvider {
                 .addItem(getOranges(), quantity = 1.0)
                 .addItem(getLemons(), quantity = 3.0),
             "/shopping_cart_with_special_offer_PercentDiscountBundle_MultipleItems.txt"
+        ),
+    )
+
+    @JvmStatic
+    fun getShoppingCartWithSpecialOffersOnHtml(): Stream<Arguments> = Stream.of(
+        Arguments.of(
+            ShoppingCart().addItem(getToothBrush(), quantity = 2.0),
+            "/html_shopping_cart_with_special_offer_TwoForAmount.txt"
+        ),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getToothBrush(), quantity = 4.0)
+                .addItem(getToothBrush(), quantity = 1.0),
+            "/html_shopping_cart_with_special_offer_TwoForAmountMultipleItems.txt"
+        ),
+        Arguments.of(
+            ShoppingCart().addItem(getApples(), quantity = 5.0),
+            "/html_shopping_cart_with_special_offer_discount_per_kilo.txt"
+        ),
+        Arguments.of(
+            ShoppingCart().addItem(getRice(), quantity = 2.0),
+            "/html_shopping_cart_with_special_offer_discount_per_each.txt"
+        ),
+        Arguments.of(
+            ShoppingCart().addItem(getToothPaste(), quantity = 5.0),
+            "/html_shopping_cart_with_special_offer_FiveForAmount.txt"
+        ),
+        Arguments.of(
+            ShoppingCart().addItem(getCherries(), quantity = 3.0),
+            "/html_shopping_cart_with_special_offer_ThreeForAmount.txt"
+        ),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getToothBrush(), quantity = 1.0)
+                .addItem(getToothPaste(), quantity = 1.0)
+                .addItem(getLemons(), quantity = 1.0),
+            "/html_shopping_cart_with_special_offer_PercentDiscountBundle.txt"
+        ),
+        Arguments.of(
+            ShoppingCart()
+                .addItem(getOranges(), quantity = 1.0)
+                .addItem(getLemons(), quantity = 3.0),
+            "/html_shopping_cart_with_special_offer_PercentDiscountBundle_MultipleItems.txt"
         ),
     )
 
