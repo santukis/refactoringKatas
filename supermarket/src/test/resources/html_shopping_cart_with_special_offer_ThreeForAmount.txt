@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Receipt</title>
+    <head>
+    <body>
+        <p>Cherry tomatoes                     2.07</p>
+            <p>0.69 * 3</p>
+        <p>3 for 2(Cherry tomatoes)           -0.69</p>
+        <p>Total:                              1.38</p>
+    </body>
+</html>

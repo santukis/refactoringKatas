@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Receipt</title>
+    <head>
+    <body>
+        <p>toothbrush                          0.99</p>
+        <p>toothpaste                          1.79</p>
+        <p>apples                              3.98</p>
+            <p>1.99 * 2.000</p>
+        <p>rice                                2.49</p>
+        <p>Cherry tomatoes                     0.69</p>
+        <p>Total:                              9.94</p>
+    </body>
+</html>

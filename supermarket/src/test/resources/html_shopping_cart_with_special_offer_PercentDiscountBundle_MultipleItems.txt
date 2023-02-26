@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Receipt</title>
+    <head>
+    <body>
+        <p>Oranges                             0.79</p>
+        <p>Lemons                              3.87</p>
+            <p>1.29 * 3.000</p>
+        <p>15.0% off(Oranges, Lemons)         -0.31</p>
+        <p>Total:                              4.35</p>
+    </body>
+</html>
